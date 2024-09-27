@@ -1,0 +1,119 @@
+/*
+pluginManagement {
+    def flutterSdkPath = {
+        def properties = new Properties()
+        file("local.properties").withInputStream { properties.load(it) }
+        def flutterSdkPath = properties.getProperty("flutter.sdk")
+        assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
+        return flutterSdkPath
+    }()
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+plugins {
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+    id "com.android.application" version "7.3.0" apply false
+    // START: FlutterFire Configuration
+    id "com.google.gms.google-services" version "4.3.15" apply false
+    // END: FlutterFire Configuration
+    id "org.jetbrains.kotlin.android" version "2.0.20" apply false
+}
+include ':app'
+//setBinding(new ScriptGroup.Binding([gradle: this]))
+evaluate(new File(
+        settingsDir.parentFile,
+        'app_settings.gradle',
+))
+include ':app'
+
+def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
+
+apply from: "$flutterProjectRoot\\flutter_settings.gradle"
+
+// Generated file. Do not edit.
+def flutterRoot = '.flutter'
+include ':flutter'
+project(':flutter').projectDir = new File(flutterRoot)*/
+/*
+pluginManagement {
+    def flutterSdkPath = {
+        def properties = new Properties()
+        file("local.properties").withInputStream { properties.load(it) }
+        def flutterSdkPath = properties.getProperty("flutter.sdk")
+        assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
+        return flutterSdkPath
+    }()
+
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+    id "com.android.application" version "7.3.0" apply false
+    // START: FlutterFire Configuration
+    id "com.google.gms.google-services" version "4.3.15" apply false
+    // END: FlutterFire Configuration
+    id "org.jetbrains.kotlin.android" version "2.0.20" apply false
+}
+
+include ':app'
+
+// Evaluate the app_settings.gradle file if it exists
+def appSettingsFile = new File(settingsDir.parentFile, 'app_settings.gradle')
+if (appSettingsFile.exists()) {
+    evaluate(appSettingsFile)
+}
+
+
+def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
+
+apply from: "$flutterProjectRoot/flutter_settings.gradle"
+
+// Generated file. Do not edit.
+def flutterRoot = '.flutter'
+include ':flutter'
+project(':flutter').projectDir = new File(flutterRoot)*/
+pluginManagement {
+    def flutterSdkPath = {
+        def properties = new Properties()
+        file("local.properties").withInputStream { properties.load(it) }
+        def flutterSdkPath = properties.getProperty("flutter.sdk")
+        assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
+        return flutterSdkPath
+    }()
+
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+    id "com.android.application" version "7.3.0" apply false
+    // START: FlutterFire Configuration
+    id "com.google.gms.google-services" version "4.3.15" apply false
+    // END: FlutterFire Configuration
+    id "org.jetbrains.kotlin.android" version "2.0.20" apply false
+}
+
+include ':app'
+
+// Evaluate the app_settings.gradle file if it exists
+def appSettingsFile = new File(settingsDir.parentFile, 'app_settings.gradle')
+if (appSettingsFile.exists()) {
+    evaluate(appSettingsFile)
+}

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "724523601373",
+    "firebase_url": "https://furniture-worldapp-default-rtdb.firebaseio.com",
+    "project_id": "furniture-worldapp",
+    "storage_bucket": "furniture-worldapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724523601373:android:eb097567bc409b21183a34",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-vam7lMuL6GOW4y7vaIphdY1F3VAYxPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,246 @@
+
+//* final jnab
+// Buildscript block must come first
+/*buildscript {
+    ext.kotlin_version = '1.9.0'  // Correct Kotlin version
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:8.1.1' // Update Gradle plugin version
+//        classpath 'com.google.gms:google-services:4.3.15'  // Update Google services version
+    }
+}
+
+// Now the plugins block
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.gms.google-services'
+}
+// All projects repositories
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+// Android block for configuring the Android app
+android {
+    namespace "com.example.app"
+    compileSdkVersion 33
+
+    defaultConfig {
+        applicationId "com.example.app"
+        minSdkVersion 23
+        targetSdk flutter.targetSdkVersion
+        versionCode 1  // Set a static version code
+        versionName "1.0.0"  // Set a static version name
+        multiDexEnabled true  // If needed
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    signingConfigs {
+        release {
+            storeFile file("your_keystore_file.jks") // Update with your keystore file path
+            storePassword "your_keystore_password" // Update with your keystore password
+            keyAlias "your_key_alias" // Update with your key alias
+            keyPassword "your_key_password" // Update with your key password
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true  // Enable code shrinking
+            shrinkResources true // Enable resource shrinking
+            signingConfig signingConfigs.release // Use the release signing config
+        }
+        debug {
+            minifyEnabled false // No shrinking for debug builds
+        }
+    }
+}
+// Dependencies block for including necessary libraries
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // Add other dependencies if necessary
+}*/
+//// Buildscript block must come first
+//buildscript {
+//    ext.kotlin_version = '1.9.0'  // Correct Kotlin version
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+//    dependencies {
+//        classpath 'com.android.tools.build:gradle:8.0.0'  // Update Gradle plugin version
+//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        classpath 'com.google.gms:google-services:4.3.15'  // Update Google services version
+//    }
+//}
+//
+//// Now the plugins block
+//plugins {
+//    id 'com.android.application'
+//    id 'kotlin-android'
+//    id 'com.google.gms.google-services'
+//}
+//
+//// All projects repositories
+//allprojects {
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+//}
+//
+//// Android block for configuring the Android app
+//android {
+//    namespace "com.example.furnitureworldapplication"
+//    compileSdkVersion 34  // Updated compileSdkVersion
+//
+//    defaultConfig {
+//        applicationId "com.example.app"
+//        minSdkVersion 21
+//        targetSdkVersion 33  // Updated targetSdkVersion
+//        versionCode 1  // Set a static version code
+//        versionName "1.0.0"  // Set a static version name
+//        multiDexEnabled true  // If needed
+//    }
+//
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+//
+//    signingConfigs {
+//        release {
+//            storeFile file("your_keystore_file.jks") // Update with your keystore file path
+//            storePassword "your_keystore_password" // Update with your keystore password
+//            keyAlias "your_key_alias" // Update with your key alias
+//            keyPassword "your_key_password" // Update with your key password
+//        }
+//    }
+//
+//    buildTypes {
+//        release {
+//            minifyEnabled true  // Enable code shrinking
+//            shrinkResources true // Enable resource shrinking
+//            signingConfig signingConfigs.release // Use the release signing config
+//        }
+//        debug {
+//            minifyEnabled false // No shrinking for debug builds
+//        }
+//    }
+//}
+//
+//// Dependencies block for including necessary libraries
+//dependencies {
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+//    // Add other dependencies if necessary
+//}
+/*buildscript {
+    ext.kotlin_version = '1.9.0'  // Correct Kotlin version
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle-kotlin:8.8.0-alpha02'  // Gradle plugin version
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        classpath 'com.google.gms:google-services:4.4.2'  // Google services version
+    }
+}
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.gms.google-services'
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+android {
+    namespace "com.example.furnitureworldapplication"
+    compileSdkVersion 34
+
+    defaultConfig {
+        applicationId "com.example.app"  // Ensure this matches google-services.json
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0.0"
+        multiDexEnabled true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("your_keystore_file.jks")  // Update with your actual keystore
+            storePassword "your_keystore_password"
+            keyAlias "your_key_alias"
+            keyPassword "your_key_password"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.google.firebase:firebase-analytics:21.0.0'
+    implementation 'com.google.firebase:firebase-auth:22.0.0'
+}*/
+buildscript {
+    ext.kotlin_version = '1.9.0' // Define your Kotlin version here
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:8.6.1'
+        classpath 'com.google.gms:google-services:4.4.2'
+        // Add other dependencies here
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
