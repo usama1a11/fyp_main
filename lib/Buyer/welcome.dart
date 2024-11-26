@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:furnitureworldapplication/Buyer/login.dart';
 import 'package:furnitureworldapplication/Buyer/register.dart';
 
@@ -34,4 +34,4 @@ class _WelcomeState extends State<Welcome> {
       ),
     );
   }
-}
+}*/

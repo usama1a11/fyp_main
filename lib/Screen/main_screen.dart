@@ -1,18 +1,15 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:furnitureworldapplication/Buyer/welcome/page_one.dart';
 import 'package:furnitureworldapplication/Buyer/welcome/page_three.dart';
 import 'package:furnitureworldapplication/Buyer/welcome/page_two.dart';
 import 'package:furnitureworldapplication/screen/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../welcome_pages/page_one.dart';
-
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
-
 class _MainScreenState extends State<MainScreen> {
   final PageController pageController=PageController(initialPage: 0);
   int activepage=0;
@@ -61,4 +58,4 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-}
+}*/

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+/*import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:furnitureworldapplication/Buyer/welcome.dart';
 // import 'package:furnitureworldapplication/Admin/login.dart';
@@ -15,42 +15,6 @@ class PageThree extends StatelessWidget {
     return Scaffold(
       body: Stack(
           children: [
-            /* Align(
-            alignment: Alignment(1, 0.7),
-            child: Container(
-              height: 150,
-              width: 80,
-              decoration: BoxDecoration(
-                  color: pimaryColor,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(300),
-                    topLeft: Radius.circular(80),
-                  ),
-                border: Border.all(
-                  width: 3,
-                  color: Color(0xFFF9DAB0),
-                )
-              ),
-            ),
-          ),*/
-            /* Align(
-            alignment: Alignment(1, -0.7),
-            child: Container(
-              height: 130,
-              width: 80,
-              decoration: BoxDecoration(
-                  color: pimaryColor,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(80),
-                    topLeft: Radius.circular(80),
-                  ),
-                  border: Border.all(
-                    width: 3,
-                    color: Color(0xFFF9DAB0),
-                  )
-              ),
-            ),
-          ),*/
             Container(
               padding: EdgeInsets.only(top: defaultPadding*5,bottom: defaultPadding*5),
               child: Column(
@@ -111,4 +75,4 @@ class PageThree extends StatelessWidget {
       ),
     );
   }
-}
+}*/

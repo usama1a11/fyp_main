@@ -473,6 +473,5 @@ class Checkout extends StatelessWidget {
       ),
     );
   }*//*
-
 }
 */

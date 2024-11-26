@@ -61,7 +61,6 @@ import 'package:furnitureworldapplication/Screen/Add_to_cart/loading_widgets.dar
   }
 }*/
 import 'package:flutter/material.dart';
-
 class ImageWidget extends StatelessWidget {
   final String imageUrl;
   final double height;
@@ -85,7 +84,7 @@ class ImageWidget extends StatelessWidget {
         imageUrl,
         fit: BoxFit.cover,
       )
-          : Image.asset(
+          : Image.network(
         imageUrl,
         fit: BoxFit.cover,
       ),

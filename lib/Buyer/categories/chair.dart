@@ -16,7 +16,7 @@ import 'package:furnitureworldapplication/models/categories_icon.dart';
 import 'package:furnitureworldapplication/models/products.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../Screen/cart.dart';
-import '../../Screen/home.dart';
+import '../../Screen/a_home.dart';
 import '../../Screen/profile.dart';
 import '../../Screen/wishlist.dart';
 import '../../Screen/wishprovider.dart';
@@ -236,7 +236,8 @@ class _ChairState extends State<Chair> {
     );
   }
 
-*//*
+*/
+/*
   Widget gridViewCard(Products products) {
     final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref().child('Wishlist');
 

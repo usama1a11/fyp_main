@@ -10,8 +10,7 @@ class Wishlist extends StatefulWidget {
   State<Wishlist> createState() => _WishlistState();
 }
 class _WishlistState extends State<Wishlist> {
-  final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref()
-      .child('Wishlist');
+  final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref().child('Wishlist');
   late WishlistProvider wishlistProvider;
 
   @override
@@ -28,7 +27,17 @@ class _WishlistState extends State<Wishlist> {
         appBar: AppBar(
           backgroundColor: Colors.brown.withOpacity(0.7),
           centerTitle: true,
-          title: Text("Wishlist",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
+          title: Text("Wishlist",style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold, fontSize: 25),),
+          elevation: 0,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.brown, Colors.brown.shade900],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -84,7 +93,7 @@ class _WishlistState extends State<Wishlist> {
                           child: ListTile(
                             leading: CircleAvatar(
                               radius: 30,
-                              backgroundImage: AssetImage(item['Image']),
+                              backgroundImage: NetworkImage(item['Image']),
                             ),
                             title: Text(
                               item['Title'],
@@ -97,7 +106,7 @@ class _WishlistState extends State<Wishlist> {
                               style: TextStyle(color: Colors.black.withOpacity(0.5)),
                             ),
                             trailing: Text(
-                              "Rs $price",
+                              "\$$price",
                               style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -110,97 +119,10 @@ class _WishlistState extends State<Wishlist> {
             },
           ),
         ),
-     /*   body: Consumer<WishlistProvider>(
-          builder: (context, wishlistProvider, child) {
-            return StreamBuilder<DatabaseEvent>(
-              stream: _databaseReference.onValue,
-              builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.brown,
-                    ),
-                  );
-                } else {
-                  final data = snapshot.data!.snapshot.value as Map<
-                      dynamic,
-                      dynamic>?;
-                  if (data == null || data.isEmpty) {
-                    return Center(
-                      child: Text(
-                        'Your wishlist is empty!',
-                        style: TextStyle(fontSize: 18, color: Colors.black54),
-                      ),
-                    );
-                  } else {
-                    final list = data.values.toList();
-                    return ListView.builder(
-                      itemCount: list.length,
-                      itemBuilder: (context, index) {
-                        final item = list[index];
-                        final price = item['Price'];
-                        final id = item['Id'];
-                        return Slidable(
-                          endActionPane: ActionPane(
-                            motion: StretchMotion(),
-                            children: [
-                              SlidableAction(
-                                label: "Delete",
-                                onPressed: (context) {
-                                  _databaseReference.child(id).remove().then((_) {
-                                    wishlistProvider.removeFromWishlist(id); // Correct the id usage
-                                    Fluttertoast.showToast(msg: "Deleted Successfully");
-                                  }).onError((error, stackTrace) {
-                                    Fluttertoast.showToast(msg: "Something went wrong");
-                                  });
-                                },
-                                icon: Icons.delete,
-                                backgroundColor: Colors.red,
-                              ),
-                            ],
-                          ),
-                          child: Card(
-                            color: Colors.brown.withOpacity(0.5),
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                radius: 30,
-                                backgroundImage: AssetImage(item['Image']),
-                              ),
-                              title: Text(
-                                item['Title'],
-                                style: TextStyle(fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.black),
-                              ),
-                              subtitle: Text(
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                item['Description'],
-                                style: TextStyle(
-                                    color: Colors.black.withOpacity(0.5)),
-                              ),
-                              trailing: Text(
-                                "Rs $price",
-                                style: TextStyle(color: Colors.black,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  }
-                }
-              },
-            );
-          },
-        ),*/
       ),
     );
   }
 }
-
 /*
       ),
     );
@@ -424,5 +346,90 @@ class _WishlistState extends State<Wishlist> {
                           ),
                         ),
                       );*/
-
+/*   body: Consumer<WishlistProvider>(
+          builder: (context, wishlistProvider, child) {
+            return StreamBuilder<DatabaseEvent>(
+              stream: _databaseReference.onValue,
+              builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.brown,
+                    ),
+                  );
+                } else {
+                  final data = snapshot.data!.snapshot.value as Map<
+                      dynamic,
+                      dynamic>?;
+                  if (data == null || data.isEmpty) {
+                    return Center(
+                      child: Text(
+                        'Your wishlist is empty!',
+                        style: TextStyle(fontSize: 18, color: Colors.black54),
+                      ),
+                    );
+                  } else {
+                    final list = data.values.toList();
+                    return ListView.builder(
+                      itemCount: list.length,
+                      itemBuilder: (context, index) {
+                        final item = list[index];
+                        final price = item['Price'];
+                        final id = item['Id'];
+                        return Slidable(
+                          endActionPane: ActionPane(
+                            motion: StretchMotion(),
+                            children: [
+                              SlidableAction(
+                                label: "Delete",
+                                onPressed: (context) {
+                                  _databaseReference.child(id).remove().then((_) {
+                                    wishlistProvider.removeFromWishlist(id); // Correct the id usage
+                                    Fluttertoast.showToast(msg: "Deleted Successfully");
+                                  }).onError((error, stackTrace) {
+                                    Fluttertoast.showToast(msg: "Something went wrong");
+                                  });
+                                },
+                                icon: Icons.delete,
+                                backgroundColor: Colors.red,
+                              ),
+                            ],
+                          ),
+                          child: Card(
+                            color: Colors.brown.withOpacity(0.5),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 30,
+                                backgroundImage: AssetImage(item['Image']),
+                              ),
+                              title: Text(
+                                item['Title'],
+                                style: TextStyle(fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.black),
+                              ),
+                              subtitle: Text(
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                item['Description'],
+                                style: TextStyle(
+                                    color: Colors.black.withOpacity(0.5)),
+                              ),
+                              trailing: Text(
+                                "Rs $price",
+                                style: TextStyle(color: Colors.black,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                }
+              },
+            );
+          },
+        ),*/
 

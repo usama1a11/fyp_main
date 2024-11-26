@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+/*import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:furnitureworldapplication/Buyer/login.dart';
-import '../Screen/home.dart';
+import '../Screen/a_home.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -283,26 +283,80 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
+}*/
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:furnitureworldapplication/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'login.dart'; // Adjust this import according to your project structure
+
+class Register extends StatefulWidget {
+  @override
+  _RegisterState createState() => _RegisterState();
 }
-/*class _RegisterState extends State<Register> {
-  final formkey=GlobalKey<FormState>();
-  final namec=TextEditingController();
-  final addressc=TextEditingController();
-  final emailc=TextEditingController();
-  final passwordc=TextEditingController();
-  final firebaseauth=FirebaseAuth.instance;
-  bool hidden=true;
-  void Display(){
-    firebaseauth.createUserWithEmailAndPassword(email: emailc.text.toString(), password: passwordc.text.toString()).then((value){
-      Fluttertoast.showToast(msg: "User Registerd");
-    }).onError((error,stackTrace){
-      Fluttertoast.showToast(msg: "Something went wrong $error");
-    });
+
+class _RegisterState extends State<Register> {
+  final formkey = GlobalKey<FormState>();
+  final namec = TextEditingController();
+  final addressc = TextEditingController();
+  final emailc = TextEditingController();
+  final passwordc = TextEditingController();
+  final firebaseauth = FirebaseAuth.instance;
+  bool hidden = true;
+
+  void Display() async {
+    if (formkey.currentState!.validate()) {
+      try {
+        UserCredential value = await firebaseauth.createUserWithEmailAndPassword(
+          email: emailc.text.trim(),
+          password: passwordc.text.trim(),
+        );
+        // Save user data to Firebase Database
+        await FirebaseDatabase.instance.ref('Register/${value.user?.uid}').set({
+          'name': namec.text.trim(),
+          'address': addressc.text.trim(),
+          'email': emailc.text.trim(),
+          'password': passwordc.text.trim(),
+          'userId': value.user?.uid,
+        });
+
+        // Store user session data in SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+        await prefs.setString('userId', value.user?.uid ?? ''); // Store userId if needed
+
+        Fluttertoast.showToast(msg: "User Registered");
+        // Navigate to the login screen after successful registration and data save
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
+      } catch (error) {
+        if (error is FirebaseAuthException) {
+          if (error.code == 'email-already-in-use') {
+            Fluttertoast.showToast(msg: "Email already in use. Please use a different email.");
+          } else {
+            Fluttertoast.showToast(msg: "Something went wrong: ${error.message}");
+          }
+        } else {
+          Fluttertoast.showToast(msg: "An unexpected error occurred.");
+        }
+      }
+    }
   }
-  // var MediaQuery="";
+  Future<bool> _onWillPop() async {
+    // Navigate to the SelectionScreen when back is pressed
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SelectionScreen()),
+    );
+    return false; // Prevent the default behavior of closing the app
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
         body: SafeArea(
           child: Stack(
             children: [
@@ -310,20 +364,21 @@ class _RegisterState extends State<Register> {
                 height: double.infinity,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [
-                        Color(0xff881736),
-                        Color(0xff281537),
-                      ]
-                  ),
+                  gradient: LinearGradient(colors: [
+                    Colors.brown,
+                    Colors.brown.shade900,
+                  ]),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 40.0,left: 19),
-                  child: Text("Hello\nSign up!",style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),),
+                  padding: const EdgeInsets.only(top: 40.0, left: 19),
+                  child: Text(
+                    "Hello\nSign up!",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
               Padding(
@@ -338,159 +393,166 @@ class _RegisterState extends State<Register> {
                   ),
                   height: double.infinity,
                   width: double.infinity,
-                  child:  Form(
+                  child: Form(
                     key: formkey,
                     child: ListView(
-                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          height: 30,
-                        ),
+                        SizedBox(height: 30),
                         Padding(
-                          padding: const EdgeInsets.only(left: 18.0,right: 18.0),
+                          padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                           child: TextFormField(
+                            style: TextStyle(color: Colors.black),
                             controller: namec,
-                            obscureText: false,
-                            validator: (value){
-                              if(value!.isEmpty){
+                            validator: (value) {
+                              if (value!.isEmpty) {
                                 return "Please enter name";
                               }
-                              else{
-                                return null;
-                              }
+                              return null;
                             },
                             decoration: InputDecoration(
-                                suffixIcon: Icon(Icons.check),
-                                label: Text("Name",style: TextStyle(color: Color(0xff881736),fontWeight: FontWeight.bold,),)
+                              suffixIcon: Icon(Icons.check),
+                              label: Text(
+                                "Name",
+                                style: TextStyle(
+                                  color: Colors.brown.shade500,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 18.0,right: 18.0),
+                          padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                           child: TextFormField(
+                            style: TextStyle(color: Colors.black),
                             controller: addressc,
-                            obscureText: false,
-                            validator: (value){
-                              if(value!.isEmpty){
+                            validator: (value) {
+                              if (value!.isEmpty) {
                                 return "Please enter address";
                               }
-                              else{
-                                return null;
-                              }
+                              return null;
                             },
                             decoration: InputDecoration(
-                                suffixIcon: Icon(Icons.check),
-                                label: Text("Address",style: TextStyle(color: Color(0xff881736),fontWeight: FontWeight.bold,),)
+                              suffixIcon: Icon(Icons.check),
+                              label: Text(
+                                "Address",
+                                style: TextStyle(
+                                  color: Colors.brown.shade500,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 18.0,right: 18.0),
+                          padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                           child: TextFormField(
+                            style: TextStyle(color: Colors.black),
                             controller: emailc,
-                            obscureText: false,
-                            validator: (value){
-                              if(value!.isEmpty){
+                            validator: (value) {
+                              if (value!.isEmpty) {
                                 return "Please enter email";
                               }
-                              else{
-                                return null;
-                              }
+                              return null;
                             },
                             decoration: InputDecoration(
-                                suffixIcon: Icon(Icons.check),
-                                label: Text("Email",style: TextStyle(color: Color(0xff881736),fontWeight: FontWeight.bold,),)
+                              suffixIcon: Icon(Icons.check),
+                              label: Text(
+                                "Email",
+                                style: TextStyle(
+                                  color: Colors.brown.shade500,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 18.0,right: 18.0),
+                          padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                           child: TextFormField(
+                            style: TextStyle(color: Colors.black),
                             controller: passwordc,
                             obscureText: hidden,
-                            validator: (value){
-                              if(value!.isEmpty){
-                                return "please enter password";
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter password";
                               }
-                              else{
-                                return null;
-                              }
+                              return null;
                             },
                             decoration: InputDecoration(
-                                suffixIcon: IconButton(
-                                    onPressed: (){
-                                      setState(() {
-                                        hidden=!hidden;
-                                      });
-                                    },
-                                    icon:hidden?Icon(Icons.visibility_off,color: Colors.blue.withOpacity(0.6),):Icon(Icons.visibility,color: Colors.black.withOpacity(0.6),)),
-                                label: Text("Password",style: TextStyle(color: Color(0xff881736),fontWeight: FontWeight.bold),)
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    hidden = !hidden;
+                                  });
+                                },
+                                icon: hidden
+                                    ? Icon(Icons.visibility_off, color: Colors.grey.withOpacity(0.6))
+                                    : Icon(Icons.visibility, color: Colors.brown),
+                              ),
+                              label: Text(
+                                "Password",
+                                style: TextStyle(
+                                  color: Colors.brown.shade500,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        // Align(
-                        //   alignment: Alignment.centerRight,
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.only(right: 18.0),
-                        //     child: Text("Forgot Password?",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: Color(0xff281537)),),
-                        //   ),
-                        // ),
-                        // SizedBox(
-                        //   height: 60,
-                        // ),
+                        SizedBox(height: 40),
                         Padding(
-                          padding: const EdgeInsets.only(left: 18.0,right: 18.0),
+                          padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                           child: Container(
                             height: 50,
                             width: 300,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                gradient: LinearGradient(
-                                    colors: [
-                                      Color(0xff881736),
-                                      Color(0xff281537),
-                                    ]
-                                )
+                              borderRadius: BorderRadius.circular(20),
+                              gradient: LinearGradient(colors: [
+                                Colors.brown.shade900,
+                                Colors.brown,
+                              ]),
                             ),
                             child: Center(
-                                child: TextButton(
-                                  onPressed: (){
-                                    setState((){
-
-                                    });
-                                    if(formkey.currentState!.validate()) {
-                                      Display();
-                                    }
-                                    *//* if(formkey.currentState!.validate()){
-                                      firebaseAuth.signInWithEmailAndPassword(email: emailc.text.toString(), password: passwordc.text.toString()).then((value){
-                                        Fluttertoast.showToast(msg: "User registerd");
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Welcome()));
-                                      }).onError((error, stackTrace){
-                                        Fluttertoast.showToast(msg: "Something went wrong");
-                                      });
-                                    }*//*
-                                  }
-                                  ,child: Text("SIGN UP",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 17)),)),
+                              child: TextButton(
+                                onPressed: () {
+                                  Display();
+                                },
+                                child: Text(
+                                  "SIGN UP",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          height: 93,
-                        ),
+                        SizedBox(height: 93),
                         Padding(
                           padding: const EdgeInsets.only(right: 18.0),
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: Column(
                               children: [
-                                Text("Don't have account?",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold),),
+                                Text(
+                                  "Already have an account?",
+                                  style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                                ),
                                 TextButton(
-                                    onPressed: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
-                                },
-                                  child:Text("Sign in",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),)),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Login()),
+                                    );
+                                  },
+                                  child: Text(
+                                    "Sign in",
+                                    style: TextStyle(color: Colors.brown, fontWeight: FontWeight.bold, fontSize: 15),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -500,12 +562,10 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
               ),
-              // SizedBox(
-              //   height: 170,
-              // ),
             ],
           ),
-        )
+        ),
+      ),
     );
   }
-}*/
+}

@@ -1,4 +1,4 @@
-import 'package:buttons_tabbar/buttons_tabbar.dart';
+/*import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 class Tabbar extends StatefulWidget {
@@ -60,4 +60,4 @@ class _TabbarState extends State<Tabbar> {
           ),
         );
   }
-}
+}*/

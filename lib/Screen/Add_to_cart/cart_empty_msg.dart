@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furnitureworldapplication/Buyer/homepage.dart';
 import 'package:furnitureworldapplication/Screen/home.dart';
 
 class EmptyCartMsgWidget extends StatefulWidget {
@@ -22,8 +23,7 @@ class _EmptyCartMsgWidgetState extends State<EmptyCartMsgWidget> {
               const SizedBox(height: 20),
               ElevatedButton(
                   onPressed: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
-                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
                   },
                   child: const Text('Shop now')),
             ],

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:stripe_checkout/stripe_checkout.dart';
@@ -11,17 +10,15 @@ class StripeService {
     final url = Uri.parse("https://api.stripe.com/v1/checkout/sessions");
     String lineItems = "";
     int index = 0;
-
     // Construct the line items
     productItems.forEach((val) {
       var productPrice = (val["productPrice"] * 100).round().toString();
       lineItems += "&line_items[$index][price_data][product_data][name]=${val['productName']}";
       lineItems += "&line_items[$index][price_data][unit_amount]=$productPrice";
-      lineItems += "&line_items[$index][price_data][currency]=EUR";
+      lineItems += "&line_items[$index][price_data][currency]=USD";
       lineItems += "&line_items[$index][quantity]=${val['qty'].toString()}";
       index++;
     });
-
     try {
       // Perform the POST request to Stripe API
       final response = await http.post(
@@ -32,7 +29,6 @@ class StripeService {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       );
-
       // Check if response is successful
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
@@ -50,7 +46,6 @@ class StripeService {
       return null;
     }
   }
-
   static Future<dynamic> stripePaymentCheckout(List<dynamic> productItems,
       int subTotal,
       BuildContext context,

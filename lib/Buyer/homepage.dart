@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:furnitureworldapplication/Admin/categories/table.dart';
 import 'package:furnitureworldapplication/Screen/cart.dart';
 import 'package:furnitureworldapplication/Screen/home.dart';
-import 'package:furnitureworldapplication/Screen/order.dart';
+import 'package:furnitureworldapplication/Screen/Order/order.dart';
 import 'package:furnitureworldapplication/Screen/profile.dart';
 import 'package:furnitureworldapplication/Screen/wishlist.dart';
 import 'package:provider/provider.dart';
@@ -23,14 +23,12 @@ import '../Screen/wishprovider.dart';
 // import 'wishlist_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-
 class HomeScreen extends StatefulWidget {
 
   const HomeScreen({super.key});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
-
 class _HomeScreenState extends State<HomeScreen> {
   int _pageIndex = 0;
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
@@ -39,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Home(),
     Wishlist(),
     Cart1(),
-    Profile(),
+    Profile1(),
     Order(),
   ];
   Widget bottomItem({required int index, required IconData icon}) {
